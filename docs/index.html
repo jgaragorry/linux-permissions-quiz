@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Avanzado – Permisos en Linux</title>
+  <meta name="description" content="Quiz avanzado sobre permisos de archivos y directorios en Linux: SUID, SGID, Sticky Bit, umask y ACL." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>Quiz Avanzado – Permisos en Linux</h1>
+    <p class="sub">SUID • SGID • Sticky Bit • umask • ACL</p>
+  </header>
+
+  <main class="container">
+    <section id="intro" class="card">
+      <h2>Instrucciones</h2>
+      <ul>
+        <li>Responde todas las preguntas y pulsa <strong>Calificar</strong>.</li>
+        <li>Verás tu puntaje y explicaciones detalladas.</li>
+        <li>Puedes intentar de nuevo las veces que quieras.</li>
+      </ul>
+    </section>
+
+    <form id="quizForm" class="card" novalidate>
+      <ol id="questions" class="q-list"><!-- JS inject --></ol>
+
+      <div class="actions">
+        <button type="button" id="gradeBtn" class="btn primary">Calificar</button>
+        <button type="reset" id="resetBtn" class="btn">Reintentar</button>
+      </div>
+
+      <div id="result" class="result" aria-live="polite"></div>
+    </form>
+
+    <section class="card">
+      <h2>Tabla rápida – Permisos especiales & umask</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Concepto</th>
+              <th>Descripción</th>
+              <th>Se aplica a</th>
+              <th>Efecto principal</th>
+              <th>Ejemplo <code>ls -l</code></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SUID</td>
+              <td>Ejecuta con UID del propietario del archivo</td>
+              <td>Archivos ejecutables</td>
+              <td>Proceso corre con UID del owner</td>
+              <td><code>-rwsr-xr-x</code></td>
+            </tr>
+            <tr>
+              <td>SGID</td>
+              <td>Ejecuta con GID del grupo propietario; en directorios, hereda grupo</td>
+              <td>Archivos y directorios</td>
+              <td>GID efectivo = grupo propietario</td>
+              <td><code>-rwxr-sr-x</code></td>
+            </tr>
+            <tr>
+              <td>Sticky Bit</td>
+              <td>Restringe borrado a owner del archivo/directorio (o root)</td>
+              <td>Directorios</td>
+              <td>Evita borrado por terceros</td>
+              <td><code>drwxrwxrwt</code></td>
+            </tr>
+            <tr>
+              <td>umask</td>
+              <td>Máscara que restringe permisos por defecto</td>
+              <td>Archivos/dirs nuevos</td>
+              <td>Permisos = base AND NOT umask</td>
+              <td><code>umask 027</code> → f:640, d:750</td>
+            </tr>
+            <tr>
+              <td>ACL</td>
+              <td>Permisos por usuario/grupo específicos</td>
+              <td>Archivos y directorios</td>
+              <td>Granularidad fina + máscara</td>
+              <td><code>getfacl archivo.txt</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <small>© <span id="year"></span> Linux Permissions Quiz · MIT</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
